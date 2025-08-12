@@ -1,0 +1,48 @@
+<div class="wrap">
+  <div class="toolbar">
+    <button (click)="pickRandom()">
+      🎲 Zufälliges Datum wählen (Di/Mi/Do)
+    </button>
+    <span class="label">{{ monthLabel() }}</span>
+  </div>
+
+  <div class="calendar">
+    <div class="row header">
+      <div>Mo</div>
+      <div>Di</div>
+      <div>Mi</div>
+      <div>Do</div>
+      <div>Fr</div>
+      <div>Sa</div>
+      <div>So</div>
+    </div>
+
+    <div class="row" *ngFor="let w of weeks">
+      <div
+        class="cell"
+        *ngFor="let d of w"
+        [class.empty]="!d"
+        [class.selected]="isSelected(d)"
+        [class.rangeStart]="isRangeStart(d)"
+        [class.rangeEnd]="isRangeEnd(d)"
+      >
+        <span *ngIf="d">{{ d.getDate() }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="legend" *ngIf="selected.length">
+    <div *ngIf="selected.length === 1">
+      📅 Ausgewählt: {{ selected[0] | date : "EEEE, dd.MM.yyyy" }}
+    </div>
+    <div *ngIf="selected.length === 2">
+      📅 Zeitraum:
+      {{ selected[0] | date : "EEE, dd.MM.yyyy" }} –
+      {{ selected[1] | date : "EEE, dd.MM.yyyy" }}
+    </div>
+    <small
+      >Nur Dienstag, Mittwoch oder Donnerstag. Bei 2 Tagen: Di+Mi oder
+      Mi+Do.</small
+    >
+  </div>
+</div>
